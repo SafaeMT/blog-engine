@@ -4,6 +4,8 @@
   "description": "> A build to learn project",
   "scripts": {
     "build": "parcel build public/index.html",
+    "format": "prettier --write \"{public,src}/**/*.{html,css,js}\"",
+    "lint": "eslint \"src/**/*.js\"",
     "start": "parcel serve public/index.html",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -19,6 +21,9 @@
   },
   "homepage": "https://github.com/SafaeMT/blog-engine#readme",
   "devDependencies": {
-    "parcel": "*"
+    "eslint": "^7.27.0",
+    "eslint-config-prettier": "^8.3.0",
+    "parcel": "*",
+    "prettier": "^2.3.0"
   }
 }

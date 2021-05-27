@@ -13,6 +13,9 @@ npm-debug.log*
 # parcel cache
 .parcel-cache
 
+# Optional eslint cache
+.eslintcache
+
 # dotenv environment variables file(s)
 .env
 .env.*
