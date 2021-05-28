@@ -6,6 +6,7 @@
     "build": "parcel build public/index.html",
     "format": "prettier --write \"{public,src}/**/*.{html,css,js}\"",
     "lint": "eslint \"src/**/*.js\"",
+    "prepare": "husky install",
     "start": "parcel serve public/index.html",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -21,9 +22,17 @@
   },
   "homepage": "https://github.com/SafaeMT/blog-engine#readme",
   "devDependencies": {
+    "@commitlint/cli": "^12.1.4",
+    "@commitlint/config-conventional": "^12.1.4",
     "eslint": "^7.27.0",
     "eslint-config-prettier": "^8.3.0",
+    "husky": "^6.0.0",
+    "lint-staged": "^11.0.0",
     "parcel": "*",
     "prettier": "^2.3.0"
+  },
+  "lint-staged": {
+    "{public,src}/**/*.{html,css,js}": "prettier --write",
+    "src/**/*.js": "eslint"
   }
 }
