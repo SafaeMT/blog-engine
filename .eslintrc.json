@@ -6,13 +6,25 @@
     },
     "extends": [
         "eslint:recommended",
+        "plugin:import/recommended",
+        "plugin:jsx-a11y/recommended",
+        "plugin:react/recommended",
+        "plugin:react-hooks/recommended",
         "prettier"
     ],
     "parserOptions": {
+      "ecmaFeatures": {
+        "jsx": true
+      },
         "ecmaVersion": 12,
         "sourceType": "module"
     },
     "rules": {
       "no-console": "warn"
+    },
+    "settings": {
+      "react": {
+        "version": "detect"
+      }
     }
 }
