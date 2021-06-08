@@ -3,11 +3,12 @@
   "version": "1.0.0",
   "description": "> A build to learn project",
   "scripts": {
-    "build": "parcel build public/index.html",
-    "format": "prettier --write \"{public,src}/**/*.{html,css,js}\"",
-    "lint": "eslint \"src/**/*.js\"",
+    "build:client": "parcel build public/index.html",
+    "format": "prettier --write \"{public,src}/**/*.{html,css,js}\" \"server.js\"",
+    "lint": "eslint \"src/**/*.js\" \"server.js\"",
     "prepare": "husky install",
-    "start": "parcel serve public/index.html",
+    "start:client": "parcel serve public/index.html",
+    "start:server": "nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -32,15 +33,21 @@
     "eslint-plugin-react-hooks": "^4.2.0",
     "husky": "^6.0.0",
     "lint-staged": "^11.0.0",
+    "nodemon": "^2.0.7",
     "parcel": "*",
     "prettier": "^2.3.0"
   },
   "lint-staged": {
     "{public,src}/**/*.{html,css,js}": "prettier --write",
-    "src/**/*.js": "eslint"
+    "src/**/*.js": "eslint",
+    "server.js": [
+      "prettier --write",
+      "eslint"
+    ]
   },
   "dependencies": {
     "@material-ui/core": "^4.11.4",
+    "express": "^4.17.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-router-dom": "^5.2.0"
