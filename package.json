@@ -3,11 +3,11 @@
   "version": "1.0.0",
   "description": "> A build to learn project",
   "scripts": {
-    "build:client": "parcel build public/index.html",
-    "format": "prettier --write \"{public,src}/**/*.{html,css,js}\" \"server.js\"",
-    "lint": "eslint \"src/**/*.js\" \"server.js\"",
+    "build:client": "parcel build client/public/index.html",
+    "format": "prettier --write \"client/{public,src}/**/*.{html,css,js}\" \"server.js\"",
+    "lint": "eslint \"client/src/**/*.js\" \"server.js\"",
     "prepare": "husky install",
-    "start:client": "parcel serve public/index.html",
+    "start:client": "parcel serve client/public/index.html",
     "start:server": "nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -38,8 +38,8 @@
     "prettier": "^2.3.0"
   },
   "lint-staged": {
-    "{public,src}/**/*.{html,css,js}": "prettier --write",
-    "src/**/*.js": "eslint",
+    "client/{public,src}/**/*.{html,css,js}": "prettier --write",
+    "client/src/**/*.js": "eslint",
     "server.js": [
       "prettier --write",
       "eslint"
