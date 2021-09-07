@@ -25,8 +25,6 @@
 
 - [Jest](https://jestjs.io/)
 - [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/)
-- [Cypress](https://www.cypress.io/)
-- [Cypress Testing Library](https://testing-library.com/docs/cypress-testing-library/intro/)
 
 ### System Requirements
 

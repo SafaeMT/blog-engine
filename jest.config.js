@@ -5,7 +5,5 @@
 
 module.exports = {
   // The test environment that will be used for testing
-  testEnvironment: "jsdom",
-  // An array of regexp pattern strings that are matched against all test paths, matched tests are skipped
-  testPathIgnorePatterns: ["/cypress/", "/node_modules/"],
+  testEnvironment: "jsdom"
 };

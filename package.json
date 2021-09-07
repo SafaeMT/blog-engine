@@ -4,9 +4,8 @@
   "description": "> A build to learn project",
   "scripts": {
     "build:client": "parcel build client/public/index.html",
-    "cypress:open": "cypress open",
-    "format": "prettier 'client/{public,src}/**/*.{html,css,js}' 'cypress/**/*.{js,json}' 'server.js'",
-    "lint": "eslint 'client/src/**/*.js' 'cypress/**/*.js' 'server.js'",
+    "format": "prettier 'client/{public,src}/**/*.{html,css,js}' 'server.js'",
+    "lint": "eslint 'client/src/**/*.js' 'server.js'",
     "prepare": "husky install",
     "start:client": "parcel serve client/public/index.html",
     "start:server": "nodemon server.js",
@@ -28,13 +27,10 @@
     "@babel/preset-react": "^7.14.5",
     "@commitlint/cli": "^12.1.4",
     "@commitlint/config-conventional": "^12.1.4",
-    "@testing-library/cypress": "^7.0.6",
     "@testing-library/react": "^11.2.7",
     "babel-jest": "^27.0.2",
-    "cypress": "^7.5.0",
     "eslint": "^7.27.0",
     "eslint-config-prettier": "^8.3.0",
-    "eslint-plugin-cypress": "^2.11.3",
     "eslint-plugin-import": "^2.23.4",
     "eslint-plugin-jest": "^24.3.6",
     "eslint-plugin-jsx-a11y": "^6.4.1",
@@ -51,10 +47,6 @@
   "lint-staged": {
     "client/{public,src}/**/*.{html,css,js}": "prettier --write",
     "client/src/**/*.js": "eslint",
-    "cypress/**/*.js": [
-      "prettier --write",
-      "eslint"
-    ],
     "server.js": [
       "prettier --write",
       "eslint"
