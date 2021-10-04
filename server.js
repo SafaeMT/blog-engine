@@ -3,7 +3,12 @@ require("dotenv").config();
 const express = require("express");
 const { MongoClient } = require("mongodb");
 const PORT = 3000;
-const URI = process.env.DB_URI;
+const DB_PORT = process.env.DB_PORT;
+const PROTOCOL = process.env.DB_PROTOCOL;
+const USER = process.env.MONGO_INITDB_ROOT_USERNAME;
+const PASSWORD = process.env.MONGO_INITDB_ROOT_PASSWORD;
+const HOST = process.env.DB_HOST;
+const URI = `${PROTOCOL}://${USER}:${PASSWORD}@${HOST}:${DB_PORT}`;
 // Create the server
 const app = express();
 
@@ -25,7 +30,15 @@ const client = new MongoClient(URI, {
 // Connect to database
 client
   .connect()
-  .then(() => console.log(">> Connected correctly to the database"))
+  .then(async () => {
+    console.log(">> Connected correctly to the database");
+    const db = client.db();
+    const doc = { title: "Alpha Centauri", category: "Astronomy" };
+    const result = await db.collection("articles").insertOne(doc);
+    console.log(
+      `${result.insertedCount} document was inserted with the _id: ${result.insertedId}`
+    );
+  })
   .catch((err) => {
     console.log(err.stack);
   });
