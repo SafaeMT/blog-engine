@@ -4,7 +4,7 @@
   "description": "> A build to learn project",
   "scripts": {
     "build:client": "parcel build client/public/index.html",
-    "format": "prettier 'client/{public,src}/**/*.{html,css,js}' 'server.js'",
+    "format": "prettier 'client/{public,src}/**/*.{html,css,js}' 'server.js' '.circleci/config.yml'",
     "lint": "eslint 'client/src/**/*.js' 'server.js'",
     "prepare": "husky install",
     "start:client": "parcel serve client/public/index.html",
@@ -45,6 +45,8 @@
     "react-test-renderer": "^17.0.2"
   },
   "lint-staged": {
+    ".circleci/config.yml": "prettier --write",
+    "compose.yaml": "prettier --write",
     "client/{public,src}/**/*.{html,css,js}": "prettier --write",
     "client/src/**/*.js": "eslint",
     "server.js": [
