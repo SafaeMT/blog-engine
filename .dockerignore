@@ -1,0 +1,10 @@
+.git/
+.parcel-cache/
+dist/
+node_modules/
+
+.dockerignore
+.env
+.gitignore
+compose.yaml
+Dockerfile
