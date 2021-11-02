@@ -6,8 +6,8 @@
     "start:client": "cd client && npm start",
     "build:client": "cd client && npm run build",
     "test:client": "cd client && npm test",
+    "lint:client": "cd client && npm run lint",
     "format": "prettier 'client/{public,src}/**/*.{html,css,js}' 'server.js' '.circleci/config.yml'",
-    "lint": "eslint 'client/src/**/*.js' 'server.js'",
     "prepare": "husky install",
     "start:server": "nodemon server.js"
   },
@@ -23,21 +23,9 @@
   },
   "homepage": "https://github.com/SafaeMT/blog-engine#readme",
   "devDependencies": {
-    "@babel/preset-env": "^7.14.5",
-    "@babel/preset-react": "^7.14.5",
     "@commitlint/cli": "^12.1.4",
     "@commitlint/config-conventional": "^12.1.4",
-    "@testing-library/react": "^11.2.7",
-    "babel-jest": "^27.0.2",
-    "eslint": "^7.27.0",
-    "eslint-config-prettier": "^8.3.0",
-    "eslint-plugin-import": "^2.23.4",
-    "eslint-plugin-jest": "^24.3.6",
-    "eslint-plugin-jsx-a11y": "^6.4.1",
-    "eslint-plugin-react": "^7.24.0",
-    "eslint-plugin-react-hooks": "^4.2.0",
     "husky": "^6.0.0",
-    "jest": "^27.0.4",
     "lint-staged": "^11.0.0",
     "nodemon": "^2.0.7",
     "prettier": "^2.3.0",
@@ -47,19 +35,14 @@
     ".circleci/config.yml": "prettier --write",
     "compose.yaml": "prettier --write",
     "client/{public,src}/**/*.{html,css,js}": "prettier --write",
-    "client/src/**/*.js": "eslint",
-    "server.js": [
-      "prettier --write",
-      "eslint"
-    ]
+    "client/src/*.js": "npm run lint:client",
+    "server.js": "prettier --write"
   },
   "dependencies": {
     "@material-ui/core": "^4.11.4",
     "dotenv": "^7.0.0",
     "express": "^4.17.1",
     "mongodb": "^3.6.9",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
     "react-router-dom": "^5.2.0"
   }
 }
