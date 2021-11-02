@@ -10,9 +10,6 @@ npm-debug.log*
 # Dependency directories
 /node_modules
 
-# parcel cache
-.parcel-cache
-
 # Optional eslint cache
 .eslintcache
 

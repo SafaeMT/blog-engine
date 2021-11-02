@@ -3,13 +3,13 @@
   "version": "1.0.0",
   "description": "> A build to learn project",
   "scripts": {
-    "build:client": "parcel build client/public/index.html",
+    "start:client": "cd client && npm start",
+    "build:client": "cd client && npm run build",
+    "test:client": "cd client && npm test",
     "format": "prettier 'client/{public,src}/**/*.{html,css,js}' 'server.js' '.circleci/config.yml'",
     "lint": "eslint 'client/src/**/*.js' 'server.js'",
     "prepare": "husky install",
-    "start:client": "parcel serve client/public/index.html",
-    "start:server": "nodemon server.js",
-    "test": "jest"
+    "start:server": "nodemon server.js"
   },
   "repository": {
     "type": "git",
@@ -40,7 +40,6 @@
     "jest": "^27.0.4",
     "lint-staged": "^11.0.0",
     "nodemon": "^2.0.7",
-    "parcel": "2.0.0-beta.3.1",
     "prettier": "^2.3.0",
     "react-test-renderer": "^17.0.2"
   },
