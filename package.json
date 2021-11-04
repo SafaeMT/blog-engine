@@ -4,12 +4,12 @@
   "description": "> A build to learn project",
   "scripts": {
     "start:client": "cd client && npm start",
+    "start:server": "cd server && npm start",
     "build:client": "cd client && npm run build",
     "test:client": "cd client && npm test",
     "lint:client": "cd client && npm run lint",
     "format:client": "cd client && npm run format",
-    "prepare": "husky install",
-    "start:server": "nodemon server.js"
+    "prepare": "husky install"
   },
   "repository": {
     "type": "git",
@@ -26,16 +26,10 @@
     "@commitlint/cli": "^12.1.4",
     "@commitlint/config-conventional": "^12.1.4",
     "husky": "^6.0.0",
-    "lint-staged": "^11.0.0",
-    "nodemon": "^2.0.7"
+    "lint-staged": "^11.0.0"
   },
   "lint-staged": {
     "client/src/*.js": "client/node_modules/.bin/eslint",
     "client/**/*": "client/node_modules/.bin/prettier --write"
-  },
-  "dependencies": {
-    "dotenv": "^7.0.0",
-    "express": "^4.17.1",
-    "mongodb": "^3.6.9"
   }
 }

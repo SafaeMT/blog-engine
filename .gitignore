@@ -8,7 +8,7 @@ npm-debug.log*
 .npm
 
 # Dependency directories
-/node_modules
+/**/node_modules
 
 # dotenv environment variables file(s)
 .env
