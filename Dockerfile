@@ -16,4 +16,4 @@ COPY --chown=node:node . .
 # RUN npm run lint && npm run format -- --check `
 #     && npm run test
 
-CMD ["node", "server.js"]
+CMD ["node", "server/index.js"]
