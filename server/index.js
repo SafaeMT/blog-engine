@@ -39,6 +39,7 @@ client
       `${result.insertedCount} document was inserted with the _id: ${result.insertedId}`
     );
   })
+
   .catch((err) => {
     console.log(err.stack);
   });

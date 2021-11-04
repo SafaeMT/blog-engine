@@ -8,7 +8,9 @@
     "build:client": "cd client && npm run build",
     "test:client": "cd client && npm test",
     "lint:client": "cd client && npm run lint",
+    "lint:server": "cd server && npm run lint",
     "format:client": "cd client && npm run format",
+    "format:server": "cd server && npm run format",
     "prepare": "husky install"
   },
   "repository": {
@@ -30,6 +32,8 @@
   },
   "lint-staged": {
     "client/src/*.js": "client/node_modules/.bin/eslint",
-    "client/**/*": "client/node_modules/.bin/prettier --write"
+    "client/**/*": "client/node_modules/.bin/prettier --write",
+    "server/*.js": "server/node_modules/.bin/eslint",
+    "server/*.{js,json}": "server/node_modules/.bin/prettier --write"
   }
 }
