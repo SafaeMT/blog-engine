@@ -30,8 +30,8 @@
     "nodemon": "^2.0.7"
   },
   "lint-staged": {
-    "client/src/*.js": "npm run lint:client",
-    "client/**/*": "npm run format:client"
+    "client/src/*.js": "client/node_modules/.bin/eslint",
+    "client/**/*": "client/node_modules/.bin/prettier --write"
   },
   "dependencies": {
     "dotenv": "^7.0.0",
