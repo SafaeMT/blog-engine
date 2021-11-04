@@ -2,7 +2,7 @@ require("dotenv").config();
 
 const express = require("express");
 const { MongoClient } = require("mongodb");
-const PORT = 3000;
+const PORT = 8000;
 const DB_PORT = process.env.DB_PORT;
 const PROTOCOL = process.env.DB_PROTOCOL;
 const USER = process.env.MONGO_INITDB_ROOT_USERNAME;
