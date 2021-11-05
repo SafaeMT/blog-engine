@@ -6,8 +6,9 @@
     "start:client": "cd client && npm start",
     "start:server": "cd server && npm start",
     "build:client": "cd client && npm run build",
-    "test": "npm run test:client && npm run test:server",
+    "test": "npm run test:client:nowatch && npm run test:server",
     "test:client": "cd client && npm test",
+    "test:client:nowatch": "cd client && npm run test:nowatch",
     "test:server": "cd server && npm test",
     "lint": "npm run lint:client && npm run lint:server && npm run lint:config",
     "lint:client": "cd client && npm run lint",
@@ -42,6 +43,7 @@
     "server/*.js": "server/node_modules/.bin/eslint",
     "server/*.{js,json}": "server/node_modules/.bin/prettier --write",
     "commitlint.config.js": "server/node_modules/.bin/eslint -c 'server/.eslintrc.json'",
-    "{*,.circleci/config}.{js,json,yml,yaml,md}": "server/node_modules/.bin/prettier --write"
+    "{*,.circleci/config}.{js,json,yml,yaml,md}": "server/node_modules/.bin/prettier --write",
+    "{client/src,server}/*.test.js": "npm test"
   }
 }

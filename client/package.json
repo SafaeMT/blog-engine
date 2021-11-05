@@ -17,6 +17,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "test:nowatch": "react-scripts test --watchAll=false",
     "eject": "react-scripts eject",
     "lint": "eslint src/*.js",
     "format": "prettier {*,public/*,src/*}.{html,css,js,json,md} --write"
