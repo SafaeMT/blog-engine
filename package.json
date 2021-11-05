@@ -10,8 +10,10 @@
     "test:server": "cd server && npm test",
     "lint:client": "cd client && npm run lint",
     "lint:server": "cd server && npm run lint",
+    "lint:config": "server/node_modules/.bin/eslint -c 'server/.eslintrc.json' commitlint.config.js",
     "format:client": "cd client && npm run format",
     "format:server": "cd server && npm run format",
+    "format:config": "server/node_modules/.bin/prettier {*,.circleci/config}.{js,json,yml,yaml,md} --write",
     "prepare": "husky install"
   },
   "repository": {
@@ -35,6 +37,8 @@
     "client/src/*.js": "client/node_modules/.bin/eslint",
     "client/**/*": "client/node_modules/.bin/prettier --write",
     "server/*.js": "server/node_modules/.bin/eslint",
-    "server/*.{js,json}": "server/node_modules/.bin/prettier --write"
+    "server/*.{js,json}": "server/node_modules/.bin/prettier --write",
+    "commitlint.config.js": "server/node_modules/.bin/eslint -c 'server/.eslintrc.json'",
+    "{*,.circleci/config}.{js,json,yml,yaml,md}": "server/node_modules/.bin/prettier --write"
   }
 }
