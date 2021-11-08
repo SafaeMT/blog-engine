@@ -1,19 +1,8 @@
-# escape=`
-
-FROM node:16.8.0-alpine
-
-RUN mkdir /app && chown node:node /app
+FROM node:16.13.0-alpine AS frontend-build
+RUN mkdir -p /opt/app/frontend && chown node:node -R /opt/app
 USER node
-WORKDIR /app
-
-COPY --chown=node:node package.json package-lock.json ./
+WORKDIR /opt/app/frontend
+COPY --chown=node:node client/package.json client/package-lock.json ./
 RUN npm ci
-
-COPY --chown=node:node . .
-# No linting, formatting or testing until we have restructured all our folders/files
-# (to avoid conflicts between different versions of same packages located at different
-# levels of the app)
-# RUN npm run lint && npm run format -- --check `
-#     && npm run test
-
-CMD ["node", "server/index.js"]
+COPY --chown=node:node client/ ./
+CMD ["npm", "run", "build"]

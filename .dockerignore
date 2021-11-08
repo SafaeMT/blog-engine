@@ -1,10 +1,6 @@
-.git/
-.parcel-cache/
-dist/
-node_modules/
+client/node_modules/
+client/build/
+client/.git/
 
-.dockerignore
-.env
-.gitignore
-compose.yaml
-Dockerfile
+client/.gitignore
+client/README.md
