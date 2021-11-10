@@ -1,6 +1,8 @@
 services:
   frontend:
-    build: .
+    build:
+      context: .
+      target: frontend-build
     command: node_modules/.bin/react-scripts start --host=0.0.0.0
     ports:
       - "3000:3000"
@@ -9,3 +11,23 @@ services:
       - "./client:/opt/app/frontend"
       # Unnamed volume mount to prevent bind mount of 'node_modules'
       - /opt/app/frontend/node_modules
+
+  backend:
+    build:
+      context: .
+      target: backend
+    depends_on:
+      - "mongo"
+    command: node_modules/.bin/nodemon index.js --host=0.0.0.0
+    ports:
+      - "8000:8000"
+    volumes:
+      - "./server:/opt/app/backend"
+      - /opt/app/backend/node_modules
+
+  mongo:
+    image: "mongo:5.0.3-focal"
+    ports:
+      - "27017:27017"
+    env_file:
+      - "server/.env"
