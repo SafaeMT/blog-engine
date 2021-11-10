@@ -35,9 +35,7 @@ client
     const db = client.db();
     const doc = { title: "Alpha Centauri", category: "Astronomy" };
     const result = await db.collection("articles").insertOne(doc);
-    console.log(
-      `${result.insertedCount} document was inserted with the _id: ${result.insertedId}`
-    );
+    console.log(`The document was inserted with the _id: ${result.insertedId}`);
   })
 
   .catch((err) => {
