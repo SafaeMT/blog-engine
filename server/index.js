@@ -12,9 +12,9 @@ const URI = `${PROTOCOL}://${USER}:${PASSWORD}@${HOST}:${DB_PORT}`;
 // Create the server
 const app = express();
 
-// Set up home route
-app.get("/", function (req, res) {
-  res.send("Express here!");
+// Set up API route
+app.get("/api", function (req, res) {
+  res.send({ message: "Express backend is connected to React!" });
 });
 
 app.listen(PORT, function () {
