@@ -2,7 +2,7 @@ require("dotenv").config();
 
 const express = require("express");
 const { MongoClient } = require("mongodb");
-const PORT = 3000;
+const PORT = 8000;
 const DB_PORT = process.env.DB_PORT;
 const PROTOCOL = process.env.DB_PROTOCOL;
 const USER = process.env.MONGO_INITDB_ROOT_USERNAME;
@@ -12,9 +12,9 @@ const URI = `${PROTOCOL}://${USER}:${PASSWORD}@${HOST}:${DB_PORT}`;
 // Create the server
 const app = express();
 
-// Set up home route
-app.get("/", function (req, res) {
-  res.send("Express here!");
+// Set up API route
+app.get("/api", function (req, res) {
+  res.send({ message: "Express backend is connected to React!" });
 });
 
 app.listen(PORT, function () {
@@ -35,10 +35,9 @@ client
     const db = client.db();
     const doc = { title: "Alpha Centauri", category: "Astronomy" };
     const result = await db.collection("articles").insertOne(doc);
-    console.log(
-      `${result.insertedCount} document was inserted with the _id: ${result.insertedId}`
-    );
+    console.log(`The document was inserted with the _id: ${result.insertedId}`);
   })
+
   .catch((err) => {
     console.log(err.stack);
   });

@@ -2,7 +2,7 @@ version: 2.1
 jobs:
   build_test:
     docker:
-      - image: cimg/node:14.17.3
+      - image: cimg/node:16.13.0
     steps:
       - checkout
       - setup_remote_docker:

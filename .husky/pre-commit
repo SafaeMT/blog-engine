@@ -1,4 +1,6 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-npx --no-install lint-staged
+# '--verbose' to show output even when tasks succeed
+# In our case, we specifically want to show warnings when running the linter
+npx --no-install lint-staged --verbose

@@ -4,6 +4,6 @@
  */
 
 module.exports = {
-  // The test environment that will be used for testing
-  testEnvironment: "jsdom"
+  // If the test path matches any of the patterns, it will be skipped
+  testPathIgnorePatterns: ["/node_modules/", "/build/"],
 };

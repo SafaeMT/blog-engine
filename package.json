@@ -3,13 +3,22 @@
   "version": "1.0.0",
   "description": "> A build to learn project",
   "scripts": {
-    "build:client": "parcel build client/public/index.html",
-    "format": "prettier 'client/{public,src}/**/*.{html,css,js}' 'server.js' '.circleci/config.yml'",
-    "lint": "eslint 'client/src/**/*.js' 'server.js'",
-    "prepare": "husky install",
-    "start:client": "parcel serve client/public/index.html",
-    "start:server": "nodemon server.js",
-    "test": "jest"
+    "start:client": "cd client && npm start",
+    "start:server": "cd server && npm start",
+    "build:client": "cd client && npm run build",
+    "test": "npm run test:client:nowatch && npm run test:server",
+    "test:client": "cd client && npm test",
+    "test:client:nowatch": "cd client && npm run test:nowatch",
+    "test:server": "cd server && npm test",
+    "lint": "npm run lint:client && npm run lint:server && npm run lint:config",
+    "lint:client": "cd client && npm run lint",
+    "lint:server": "cd server && npm run lint",
+    "lint:config": "server/node_modules/.bin/eslint -c 'server/.eslintrc.json' commitlint.config.js",
+    "format": "npm run format:client && npm run format:server && npm run format:config",
+    "format:client": "cd client && npm run format",
+    "format:server": "cd server && npm run format",
+    "format:config": "server/node_modules/.bin/prettier {*,.circleci/config}.{js,json,yml,yaml,md} --write",
+    "prepare": "husky install"
   },
   "repository": {
     "type": "git",
@@ -23,44 +32,19 @@
   },
   "homepage": "https://github.com/SafaeMT/blog-engine#readme",
   "devDependencies": {
-    "@babel/preset-env": "^7.14.5",
-    "@babel/preset-react": "^7.14.5",
     "@commitlint/cli": "^12.1.4",
     "@commitlint/config-conventional": "^12.1.4",
-    "@testing-library/react": "^11.2.7",
-    "babel-jest": "^27.0.2",
-    "eslint": "^7.27.0",
-    "eslint-config-prettier": "^8.3.0",
-    "eslint-plugin-import": "^2.23.4",
-    "eslint-plugin-jest": "^24.3.6",
-    "eslint-plugin-jsx-a11y": "^6.4.1",
-    "eslint-plugin-react": "^7.24.0",
-    "eslint-plugin-react-hooks": "^4.2.0",
     "husky": "^6.0.0",
-    "jest": "^27.0.4",
-    "lint-staged": "^11.0.0",
-    "nodemon": "^2.0.7",
-    "parcel": "2.0.0-beta.3.1",
-    "prettier": "^2.3.0",
-    "react-test-renderer": "^17.0.2"
+    "lint-staged": "^11.0.0"
   },
   "lint-staged": {
-    ".circleci/config.yml": "prettier --write",
-    "compose.yaml": "prettier --write",
-    "client/{public,src}/**/*.{html,css,js}": "prettier --write",
-    "client/src/**/*.js": "eslint",
-    "server.js": [
-      "prettier --write",
-      "eslint"
-    ]
-  },
-  "dependencies": {
-    "@material-ui/core": "^4.11.4",
-    "dotenv": "^7.0.0",
-    "express": "^4.17.1",
-    "mongodb": "^3.6.9",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "react-router-dom": "^5.2.0"
+    "client/src/*.js": "client/node_modules/.bin/eslint",
+    "client/{*,public/*,src/*}.{html,css,js,json,md}": "client/node_modules/.bin/prettier --write",
+    "client/src/*.test.js": "npm run test:client:nowatch",
+    "server/*.js": "server/node_modules/.bin/eslint",
+    "server/*.{js,json}": "server/node_modules/.bin/prettier --write",
+    "server/*.test.js": "npm run test:server",
+    "commitlint.config.js": "server/node_modules/.bin/eslint -c 'server/.eslintrc.json'",
+    "{*,.circleci/config}.{js,json,yml,yaml,md}": "server/node_modules/.bin/prettier --write"
   }
 }
