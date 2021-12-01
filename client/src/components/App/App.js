@@ -1,21 +1,10 @@
 import React from "react";
+import Header from "../Header/Header";
 
 function App() {
-  const [expressMessage, setExpressMessage] = React.useState(null);
-
-  React.useEffect(() => {
-    fetch("/api")
-      .then((res) => res.json())
-      .then((data) => setExpressMessage(data.message));
-  }, []);
-
   return (
     <div>
-      <p>
-        {expressMessage
-          ? expressMessage
-          : "Waiting for a message from Express server..."}
-      </p>
+      <Header></Header>
     </div>
   );
 }
