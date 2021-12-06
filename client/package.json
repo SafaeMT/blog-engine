@@ -20,7 +20,7 @@
     "test:nowatch": "react-scripts test --watchAll=false",
     "eject": "react-scripts eject",
     "lint": "eslint src/**/*.js",
-    "format": "prettier {*,public/*,src/**/*}.{html,css,js,json,md} --write"
+    "format": "prettier {*,public/*,src/**/*}.{html,js,json,md} --write"
   },
   "eslintConfig": {
     "extends": [

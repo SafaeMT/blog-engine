@@ -39,7 +39,7 @@
   },
   "lint-staged": {
     "client/src/**/*.js": "client/node_modules/.bin/eslint",
-    "client/{*,public/*,src/**/*}.{html,css,js,json,md}": "client/node_modules/.bin/prettier --write",
+    "client/{*,public/*,src/**/*}.{html,js,json,md}": "client/node_modules/.bin/prettier --write",
     "client/src/components/**/*.test.js": "npm run test:client:nowatch",
     "server/*.js": "server/node_modules/.bin/eslint",
     "server/*.{js,json}": "server/node_modules/.bin/prettier --write",
