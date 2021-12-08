@@ -7,6 +7,7 @@ import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles({
   appBar: {
+    position: "sticky",
     height: "60px",
     padding: "0px 50px",
     color: "#61dafb",
