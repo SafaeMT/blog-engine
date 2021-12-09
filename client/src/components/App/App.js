@@ -1,5 +1,7 @@
 import React from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from "../Header/Header";
+import Home from "../../pages/Home/Home";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { createTheme, ThemeProvider } from "@material-ui/core/styles";
 
@@ -28,10 +30,15 @@ const customTheme = createTheme({
 
 function App() {
   return (
-    <ThemeProvider theme={customTheme}>
-      <CssBaseline />
-      <Header />
-    </ThemeProvider>
+    <BrowserRouter>
+      <ThemeProvider theme={customTheme}>
+        <CssBaseline />
+        <Header />
+        <Routes>
+          <Route path="/" element={<Home />} />
+        </Routes>
+      </ThemeProvider>
+    </BrowserRouter>
   );
 }
 
