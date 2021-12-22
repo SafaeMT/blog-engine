@@ -3,9 +3,13 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from "../Header/Header";
 import Home from "../../pages/Home/Home";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import { createTheme, ThemeProvider } from "@material-ui/core/styles";
+import {
+  createTheme,
+  ThemeProvider,
+  responsiveFontSizes,
+} from "@material-ui/core/styles";
 
-const customTheme = createTheme({
+let customTheme = createTheme({
   typography: {
     fontFamily: ["Ubuntu", "Roboto", "Helvetica", "Arial", "sans-serif"],
   },
@@ -27,6 +31,8 @@ const customTheme = createTheme({
     },
   },
 });
+
+customTheme = responsiveFontSizes(customTheme);
 
 function App() {
   return (

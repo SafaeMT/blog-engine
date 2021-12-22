@@ -47,8 +47,9 @@ export default function PostListItem({ post }) {
             component="div"
             className={classes.div}
           >
-            by <span className={classes.author}>{post.author}</span> -{" "}
             <span>{post.date}</span>
+            <br />
+            by <span className={classes.author}>{post.author}</span>
           </Typography>
           <Typography
             noWrap
