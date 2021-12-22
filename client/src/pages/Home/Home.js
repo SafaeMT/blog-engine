@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import PostList from "../../components/PostList/PostList";
 import Container from "@material-ui/core/Container";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core";
-import data from "../../data.js";
 
 const useStyles = makeStyles((theme) => ({
   div: {
@@ -31,11 +30,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Home() {
   const classes = useStyles();
-  const [posts, setPosts] = useState([]);
-
-  useEffect(() => {
-    setPosts(data.posts);
-  }, []);
 
   return (
     <div className={classes.div}>
@@ -43,7 +37,7 @@ export default function Home() {
         <Typography variant="h2" component="h1" className={classes.title}>
           Recent Posts
         </Typography>
-        <PostList posts={posts} />
+        <PostList />
       </Container>
     </div>
   );

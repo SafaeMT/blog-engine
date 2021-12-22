@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import PostListItem from "../PostListItem/PostListItem";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core";
+import data from "../../data.js";
 
 const useStyles = makeStyles({
   gridItem: {
@@ -9,8 +10,13 @@ const useStyles = makeStyles({
   },
 });
 
-export default function PostList({ posts }) {
+export default function PostList() {
   const classes = useStyles();
+  const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    setPosts(data.posts);
+  }, []);
 
   return (
     <Grid container spacing={2}>
