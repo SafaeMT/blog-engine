@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardContent from "@material-ui/core/CardContent";
@@ -28,10 +29,15 @@ const useStyles = makeStyles((theme) => ({
 
 export default function PostListItem({ post }) {
   const classes = useStyles();
+  let navigate = useNavigate();
+
+  function handleClick() {
+    navigate(`/post/${post.id}`);
+  }
 
   return (
     <Card square elevation={0} className={classes.card}>
-      <CardActionArea>
+      <CardActionArea onClick={handleClick}>
         <CardContent>
           <Typography
             gutterBottom
