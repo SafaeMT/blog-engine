@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from "../Header/Header";
+import NotFound from "../../pages/NotFound/NotFound";
 import Home from "../../pages/Home/Home";
 import Post from "../../pages/Post/Post";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -42,6 +43,7 @@ function App() {
         <CssBaseline />
         <Header />
         <Routes>
+          <Route path="*" element={<NotFound />} />
           <Route path="/" element={<Home />} />
           <Route path="/post/:id" element={<Post />} />
         </Routes>
