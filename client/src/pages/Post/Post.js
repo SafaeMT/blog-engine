@@ -1,5 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useLayoutEffect } from "react";
 import { useParams } from "react-router-dom";
+import NotFound from "../NotFound/NotFound";
 import Container from "@material-ui/core/Container";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core";
@@ -41,29 +42,45 @@ export default function Post() {
   const [post, setPost] = useState({});
   let urlParams = useParams();
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     let [filteredPost] = data.posts.filter((post) => post.id == urlParams.id);
-    setPost(filteredPost);
+    if (filteredPost) {
+      setPost(filteredPost);
+    }
   }, []);
 
   return (
-    <div className={classes.wrapperDiv}>
-      <Container>
-        <Typography
-          gutterBottom
-          variant="h2"
-          component="h1"
-          className={classes.title}
-        >
-          {post.title}
-        </Typography>
-        <Typography variant="subtitle1" component="div" className={classes.div}>
-          {post.date} - by {post.author}
-        </Typography>
-        <Typography variant="body1" component="p" className={classes.content}>
-          {post.content}
-        </Typography>
-      </Container>
-    </div>
+    <>
+      {Object.keys(post).length === 0 ? (
+        <NotFound />
+      ) : (
+        <div className={classes.wrapperDiv}>
+          <Container>
+            <Typography
+              gutterBottom
+              variant="h2"
+              component="h1"
+              className={classes.title}
+            >
+              {post.title}
+            </Typography>
+            <Typography
+              variant="subtitle1"
+              component="div"
+              className={classes.div}
+            >
+              {post.date} - by {post.author}
+            </Typography>
+            <Typography
+              variant="body1"
+              component="p"
+              className={classes.content}
+            >
+              {post.content}
+            </Typography>
+          </Container>
+        </div>
+      )}
+    </>
   );
 }
