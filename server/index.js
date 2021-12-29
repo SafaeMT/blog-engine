@@ -1,6 +1,7 @@
 require("dotenv").config();
 
 const express = require("express");
+const router = require("./routes/api");
 const { MongoClient } = require("mongodb");
 const PORT = 8000;
 const DB_PORT = process.env.DB_PORT;
@@ -12,10 +13,8 @@ const URI = `${PROTOCOL}://${USER}:${PASSWORD}@${HOST}:${DB_PORT}`;
 // Create the server
 const app = express();
 
-// Set up API route
-app.get("/api", function (req, res) {
-  res.send({ message: "Express backend is connected to React!" });
-});
+// Initialize routes
+app.use("/api", router);
 
 app.listen(PORT, function () {
   console.info(`>> Express server is running on port ${PORT}`);
