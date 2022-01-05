@@ -22,8 +22,15 @@ router.get("/posts", function (req, res) {
   res.send(posts);
 });
 
-router.get("/post/:id", function (req, res) {
-  res.send({ message: `GET the post that has ID = ${req.params.id}` });
+router.get("/posts/:id", function (req, res) {
+  let requestedPost = posts.find((post) => {
+    return post.id === req.params.id;
+  });
+
+  if (!requestedPost) {
+    res.status(404).end();
+  }
+  res.send(requestedPost);
 });
 
 module.exports = router;
