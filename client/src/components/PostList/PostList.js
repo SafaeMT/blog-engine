@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import PostListItem from "../PostListItem/PostListItem";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core";
-import data from "../../data.js";
 
 const useStyles = makeStyles({
   gridItem: {
@@ -15,7 +14,9 @@ export default function PostList() {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
-    setPosts(data.posts);
+    fetch("/api/posts?limit=9")
+      .then((response) => response.json())
+      .then((data) => setPosts(data));
   }, []);
 
   return (

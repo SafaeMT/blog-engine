@@ -35,6 +35,16 @@ export default function PostListItem({ post }) {
     navigate(`/post/${post.id}`);
   }
 
+  function formatDate() {
+    let postDate = new Date(post.date);
+    let options = { month: "long" };
+    let longMonth = new Intl.DateTimeFormat("en-US", options).format(postDate);
+    let dayOfMonth = String(postDate.getDate()).padStart(2, "0");
+    let fullYear = postDate.getFullYear();
+
+    return `${longMonth.toUpperCase()} ${dayOfMonth}, ${fullYear}`;
+  }
+
   return (
     <Card square elevation={0} className={classes.card}>
       <CardActionArea onClick={handleClick}>
@@ -53,9 +63,9 @@ export default function PostListItem({ post }) {
             component="div"
             className={classes.div}
           >
-            <span>{post.date}</span>
+            <span>{formatDate()}</span>
             <br />
-            by <span className={classes.author}>{post.author}</span>
+            by <span className={classes.author}>{post.authorName}</span>
           </Typography>
           <Typography
             noWrap
