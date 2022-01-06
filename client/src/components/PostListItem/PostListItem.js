@@ -32,7 +32,7 @@ export default function PostListItem({ post }) {
   let navigate = useNavigate();
 
   function handleClick() {
-    navigate(`/post/${post.id}`);
+    navigate(`/posts/${post.id}`);
   }
 
   function formatDate() {

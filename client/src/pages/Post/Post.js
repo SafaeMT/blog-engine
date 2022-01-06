@@ -4,7 +4,6 @@ import NotFound from "../NotFound/NotFound";
 import Container from "@material-ui/core/Container";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core";
-import data from "../../data.js";
 
 const useStyles = makeStyles((theme) => ({
   wrapperDiv: {
@@ -39,19 +38,28 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Post() {
   const classes = useStyles();
-  const [post, setPost] = useState({});
+  const [post, setPost] = useState(null);
   let urlParams = useParams();
 
   useLayoutEffect(() => {
-    let [filteredPost] = data.posts.filter((post) => post.id == urlParams.id);
-    if (filteredPost) {
-      setPost(filteredPost);
-    }
+    fetch(`/api/posts/${urlParams.id}`)
+      .then((response) => response.json())
+      .then((data) => setPost(data));
   }, []);
+
+  function formatDate() {
+    let postDate = new Date(post.date);
+    let options = { month: "long" };
+    let longMonth = new Intl.DateTimeFormat("en-US", options).format(postDate);
+    let dayOfMonth = String(postDate.getDate()).padStart(2, "0");
+    let fullYear = postDate.getFullYear();
+
+    return `${longMonth} ${dayOfMonth}, ${fullYear}`;
+  }
 
   return (
     <>
-      {Object.keys(post).length === 0 ? (
+      {!post ? (
         <NotFound />
       ) : (
         <div className={classes.wrapperDiv}>
@@ -69,7 +77,7 @@ export default function Post() {
               component="div"
               className={classes.div}
             >
-              {post.date} - by {post.author}
+              {formatDate()} - by {post.authorName}
             </Typography>
             <Typography
               variant="body1"

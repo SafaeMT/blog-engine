@@ -45,7 +45,7 @@ function App() {
         <Routes>
           <Route path="*" element={<NotFound />} />
           <Route path="/" element={<Home />} />
-          <Route path="/post/:id" element={<Post />} />
+          <Route path="/posts/:id" element={<Post />} />
         </Routes>
       </ThemeProvider>
     </BrowserRouter>
