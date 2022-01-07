@@ -5,6 +5,7 @@ import CardActionArea from "@material-ui/core/CardActionArea";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core";
+import formatDate from "../../lib/lib";
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -35,16 +36,6 @@ export default function PostListItem({ post }) {
     navigate(`/posts/${post.id}`);
   }
 
-  function formatDate() {
-    let postDate = new Date(post.date);
-    let options = { month: "long" };
-    let longMonth = new Intl.DateTimeFormat("en-US", options).format(postDate);
-    let dayOfMonth = String(postDate.getDate()).padStart(2, "0");
-    let fullYear = postDate.getFullYear();
-
-    return `${longMonth.toUpperCase()} ${dayOfMonth}, ${fullYear}`;
-  }
-
   return (
     <Card square elevation={0} className={classes.card}>
       <CardActionArea onClick={handleClick}>
@@ -63,7 +54,7 @@ export default function PostListItem({ post }) {
             component="div"
             className={classes.div}
           >
-            <span>{formatDate()}</span>
+            <span>{formatDate({ post, upperCase: true })}</span>
             <br />
             by <span className={classes.author}>{post.authorName}</span>
           </Typography>

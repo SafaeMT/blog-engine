@@ -4,6 +4,7 @@ import NotFound from "../NotFound/NotFound";
 import Container from "@material-ui/core/Container";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core";
+import formatDate from "../../lib/lib";
 
 const useStyles = makeStyles((theme) => ({
   wrapperDiv: {
@@ -47,16 +48,6 @@ export default function Post() {
       .then((data) => setPost(data));
   }, []);
 
-  function formatDate() {
-    let postDate = new Date(post.date);
-    let options = { month: "long" };
-    let longMonth = new Intl.DateTimeFormat("en-US", options).format(postDate);
-    let dayOfMonth = String(postDate.getDate()).padStart(2, "0");
-    let fullYear = postDate.getFullYear();
-
-    return `${longMonth} ${dayOfMonth}, ${fullYear}`;
-  }
-
   return (
     <>
       {!post ? (
@@ -77,7 +68,7 @@ export default function Post() {
               component="div"
               className={classes.div}
             >
-              {formatDate()} - by {post.authorName}
+              {formatDate({ post, upperCase: false })} - by {post.authorName}
             </Typography>
             <Typography
               variant="body1"
