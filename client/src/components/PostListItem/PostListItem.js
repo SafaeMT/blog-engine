@@ -33,7 +33,7 @@ export default function PostListItem({ post }) {
   let navigate = useNavigate();
 
   function handleClick() {
-    navigate(`/posts/${post.id}`);
+    navigate(`/posts/${post._id}`);
   }
 
   return (

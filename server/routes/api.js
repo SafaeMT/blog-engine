@@ -1,5 +1,6 @@
 const express = require("express");
-const posts = require("../data/posts");
+const { ObjectId } = require("mongodb");
+const makeDb = require("../database/db");
 const router = express.Router();
 
 // Define the root route
@@ -7,30 +8,33 @@ router.get("/", function (req, res) {
   res.send({ message: "Express backend is here!" });
 });
 
-// Request URL must include the 'limit' query parameter (key & value)
-// 'limit' value indicates the number of posts we want to get from database
-router.get("/posts", function (req, res) {
-  let { limit } = req.query;
+makeDb().then((db) => {
+  // Request URL must include the 'limit' query parameter (key & value)
+  // 'limit' value indicates the number of posts we want to get from database
+  router.get("/posts", async function (req, res) {
+    let { limit } = req.query;
+    if (!limit || Number.isNaN(limit) || Number(limit) <= 0) {
+      res.status(400).end();
+    }
 
-  if (!limit || Number.isNaN(limit) || Number(limit) <= 0) {
-    res.status(400).end();
-  }
-
-  posts.sort((a, b) => {
-    return b.date.localeCompare(a.date);
+    const query = {};
+    const options = {
+      sort: { date: -1 },
+      limit: Number(limit),
+    };
+    const cursor = db.collection("posts").find(query, options);
+    if ((await cursor.count()) === 0) {
+      console.log("No documents found");
+    }
+    let requestedPosts = await cursor.toArray();
+    res.send(requestedPosts);
   });
-  res.send(posts);
-});
 
-router.get("/posts/:id", function (req, res) {
-  let requestedPost = posts.find((post) => {
-    return post.id === req.params.id;
+  router.get("/posts/:id", async function (req, res) {
+    const query = { _id: ObjectId(req.params.id) };
+    let requestedPost = await db.collection("posts").findOne(query);
+    res.send(requestedPost);
   });
-
-  if (!requestedPost) {
-    res.status(404).end();
-  }
-  res.send(requestedPost);
 });
 
 module.exports = router;

@@ -25,7 +25,7 @@ export default function PostList() {
         return (
           <Grid
             item
-            key={post.id}
+            key={post._id}
             xs={12}
             sm={6}
             md={4}
