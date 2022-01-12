@@ -41,8 +41,8 @@
     "client/src/**/*.js": "client/node_modules/.bin/eslint",
     "client/{*,public/*,src/**/*}.{html,js,json,md}": "client/node_modules/.bin/prettier --write",
     "client/src/components/**/*.test.js": "npm run test:client:nowatch",
-    "server/{*,routes/*,data/*}.js": "server/node_modules/.bin/eslint",
-    "server/{*,routes/*,data/*}.{js,json}": "server/node_modules/.bin/prettier --write",
+    "server/{*,routes/*,data/*,database/*}.js": "server/node_modules/.bin/eslint",
+    "server/{*,routes/*,data/*,database/*}.{js,json}": "server/node_modules/.bin/prettier --write",
     "server/*.test.js": "npm run test:server",
     "commitlint.config.js": "server/node_modules/.bin/eslint -c 'server/.eslintrc.json'",
     "{*,.circleci/config}.{js,json,yml,yaml,md}": "server/node_modules/.bin/prettier --write"
