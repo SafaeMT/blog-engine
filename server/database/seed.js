@@ -1,5 +1,9 @@
-const data = {
-  posts: [
+// In docker-entrypoint-initdb.d/*.js creation scripts,
+// we use shell syntax instead of driver syntax
+db.posts.insertMany(getPosts()); // eslint-disable-line
+
+function getPosts() {
+  return [
     {
       date: "2020-09-24T11:25:01Z",
       title: "consequat lectus in est risus",
@@ -408,7 +412,5 @@ const data = {
       authorId: "9cba46c0-3646-4304-8301-9c2eddc8f2e2",
       authorName: "Florence Cratchley",
     },
-  ],
-};
-
-module.exports = data.posts;
+  ];
+}
