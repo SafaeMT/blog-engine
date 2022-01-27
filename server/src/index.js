@@ -1,5 +1,5 @@
 const express = require("express");
-const router = require("./routes/api");
+const router = require("./posts");
 const PORT = 8000;
 
 // Create the server

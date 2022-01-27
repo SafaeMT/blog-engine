@@ -18,7 +18,7 @@ services:
       target: backend
     depends_on:
       - "mongo"
-    command: node_modules/.bin/nodemon index.js --host=0.0.0.0
+    command: node_modules/.bin/nodemon src/index.js --host=0.0.0.0
     ports:
       - "8000:8000"
     volumes:
@@ -32,4 +32,4 @@ services:
     env_file:
       - "server/.env"
     volumes:
-      - "./server/database/seed.js:/docker-entrypoint-initdb.d/seed.js"
+      - "./server/src/database/seed.js:/docker-entrypoint-initdb.d/seed.js"
