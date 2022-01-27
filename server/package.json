@@ -4,8 +4,8 @@
   "main": "src/index.js",
   "scripts": {
     "start": "nodemon",
-    "lint": "eslint {*,routes/*,database/*}.js",
-    "format": "prettier {*,routes/*,database/*}.{js,json} --write",
+    "lint": "eslint {*,src/**/*}.js",
+    "format": "prettier {*,src/**/*}.{js,json} --write",
     "test": "jest"
   },
   "devDependencies": {
