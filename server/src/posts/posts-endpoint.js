@@ -10,10 +10,10 @@ module.exports = function makePostHandlers({ postList }) {
     let { limit } = req.query;
     if (!limit || Number.isNaN(limit) || Number(limit) <= 0) {
       res.status(400).end();
+      return;
     }
 
     let requestedPosts = await postList.getRecentPosts(limit);
-
     res.send(requestedPosts);
   }
 
