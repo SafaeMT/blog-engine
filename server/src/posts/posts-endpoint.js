@@ -14,7 +14,7 @@ module.exports = function makePostHandlers({ postList }) {
     }
 
     let requestedPosts = await postList.getRecentPosts(limit);
-    res.send(requestedPosts);
+    res.status(200).send(requestedPosts);
   }
 
   async function handleGetPostByID(req, res) {
