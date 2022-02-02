@@ -8,7 +8,7 @@ module.exports = function makePostHandlers({ postList }) {
   // 'limit' value indicates the number of posts we want to get from database
   async function handleGetPosts(req, res) {
     let { limit } = req.query;
-    if (!limit || Number.isNaN(limit) || Number(limit) <= 0) {
+    if (!limit || Number.isNaN(Number(limit)) || Number(limit) <= 0) {
       res.status(400).end();
       return;
     }
