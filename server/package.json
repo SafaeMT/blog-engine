@@ -6,7 +6,8 @@
     "start": "nodemon",
     "lint": "eslint {*,src/**/*}.js",
     "format": "prettier {*,src/**/*}.{js,json} --write",
-    "test": "jest"
+    "test": "jest",
+    "test:watch": "jest --watch"
   },
   "devDependencies": {
     "eslint": "^8.1.0",

@@ -10,6 +10,7 @@
     "test:client": "cd client && npm test",
     "test:client:nowatch": "cd client && npm run test:nowatch",
     "test:server": "cd server && npm test",
+    "test:server:watch": "cd server && npm run test:watch",
     "lint": "npm run lint:client && npm run lint:server && npm run lint:config",
     "lint:client": "cd client && npm run lint",
     "lint:server": "cd server && npm run lint",
