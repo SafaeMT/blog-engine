@@ -5,6 +5,8 @@ const PORT = 8000;
 // Create the server
 const app = express();
 
+// Parse incoming requests with JSON payloads & populate request body with parsed data
+app.use(express.json());
 // Initialize routes
 app.use("/api", router);
 
