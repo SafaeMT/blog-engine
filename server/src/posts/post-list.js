@@ -2,6 +2,7 @@ module.exports = function makePostList({ db }) {
   return {
     getRecentPosts,
     getPostByID,
+    createPost,
   };
 
   async function getRecentPosts(limit) {
@@ -21,5 +22,17 @@ module.exports = function makePostList({ db }) {
   function getPostByID(id) {
     const query = { _id: db.makeId(id) };
     return db.collection("posts").findOne(query);
+  }
+
+  function createPost(newPost) {
+    const query = {
+      date: new Date().toISOString(),
+      title: newPost.title,
+      content: newPost.content,
+      authorId: db.makeId(),
+      authorName: newPost.authorName,
+    };
+
+    return db.collection("posts").insertOne(query);
   }
 };

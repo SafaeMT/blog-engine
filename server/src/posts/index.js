@@ -18,6 +18,7 @@ makeDb().then((db) => {
 
   router.get("/posts", postHandlers.handleGetPosts);
   router.get("/posts/:id", postHandlers.handleGetPostByID);
+  router.post("/posts", postHandlers.handleCreatePost);
 });
 
 module.exports = router;
