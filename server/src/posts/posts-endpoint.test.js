@@ -15,6 +15,7 @@ describe("Posts Endpoint", () => {
       getRecentPosts: jest.fn(),
       getPostByID: jest.fn(),
       createPost: jest.fn(),
+      deletePostByID: jest.fn(),
     };
     postHandlers = makePostHandlers({ postList: fakePostList });
   });
@@ -134,6 +135,36 @@ describe("Posts Endpoint", () => {
       expect(fakeRes.status.mock.calls.map((call) => call[0])).toEqual(
         Array(fakeReqs.length).fill(422)
       );
+    });
+  });
+
+  describe("Handle Delete Post by ID", () => {
+    it("responds accordingly after deleting a post", async () => {
+      const fakeReq = { params: { id: "ea631d8" } };
+      fakePostList.deletePostByID.mockReturnValue(true);
+
+      await postHandlers.handleDeletePostByID(fakeReq, fakeRes);
+
+      expect(fakePostList.deletePostByID.mock.calls.length).toBe(1);
+      expect(fakePostList.deletePostByID.mock.calls[0][0]).toBe(
+        fakeReq.params.id
+      );
+      expect(fakeRes.send.mock.calls.length).toBe(1);
+      expect(fakeRes.send.mock.calls[0][0]).toStrictEqual({ success: true });
+    });
+
+    it("responds accordingly when not finding a post to delete", async () => {
+      const fakeReq = { params: { id: "ea631d9" } };
+      fakePostList.deletePostByID.mockReturnValue(false);
+
+      await postHandlers.handleDeletePostByID(fakeReq, fakeRes);
+
+      expect(fakePostList.deletePostByID.mock.calls.length).toBe(1);
+      expect(fakePostList.deletePostByID.mock.calls[0][0]).toBe(
+        fakeReq.params.id
+      );
+      expect(fakeRes.send.mock.calls.length).toBe(1);
+      expect(fakeRes.send.mock.calls[0][0]).toStrictEqual({ success: false });
     });
   });
 });

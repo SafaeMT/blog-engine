@@ -3,6 +3,7 @@ module.exports = function makePostHandlers({ postList }) {
     handleGetPosts,
     handleGetPostByID,
     handleCreatePost,
+    handleDeletePostByID,
   };
 
   // Request URL must include the 'limit' query parameter (key & value)
@@ -49,5 +50,10 @@ module.exports = function makePostHandlers({ postList }) {
     const { title, content, authorName } = req.body;
     let result = await postList.createPost({ title, content, authorName });
     res.status(200).send(result);
+  }
+
+  async function handleDeletePostByID(req, res) {
+    const isDeleted = await postList.deletePostByID(req.params.id);
+    res.send({ success: isDeleted });
   }
 };

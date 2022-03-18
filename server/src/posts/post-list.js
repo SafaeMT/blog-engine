@@ -3,6 +3,7 @@ module.exports = function makePostList({ db }) {
     getRecentPosts,
     getPostByID,
     createPost,
+    deletePostByID,
   };
 
   async function getRecentPosts(limit) {
@@ -34,5 +35,11 @@ module.exports = function makePostList({ db }) {
     };
 
     return db.collection("posts").insertOne(query);
+  }
+
+  async function deletePostByID(id) {
+    const query = { _id: db.makeId(id) };
+    let result = await db.collection("posts").deleteOne(query);
+    return result.deletedCount === 1;
   }
 };
