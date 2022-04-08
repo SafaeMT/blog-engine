@@ -16,6 +16,7 @@ describe("Posts Endpoint", () => {
       getPostByID: jest.fn(),
       createPost: jest.fn(),
       deletePostByID: jest.fn(),
+      updatePostByID: jest.fn(),
     };
     postHandlers = makePostHandlers({ postList: fakePostList });
   });
@@ -165,6 +166,128 @@ describe("Posts Endpoint", () => {
       );
       expect(fakeRes.send.mock.calls.length).toBe(1);
       expect(fakeRes.send.mock.calls[0][0]).toStrictEqual({ success: false });
+    });
+  });
+
+  describe("Handle Update Post by ID", () => {
+    it("responds accordingly after updating a post", async () => {
+      const fakeReq = {
+        params: { id: "cd831a" },
+        body: { title: "Valid title", content: "Valid content" },
+      };
+      fakePostList.getPostByID.mockReturnValue({
+        title: "Title before update",
+        content: "Content before update",
+      });
+      fakePostList.updatePostByID.mockReturnValue(true);
+
+      await postHandlers.handleUpdatePostByID(fakeReq, fakeRes);
+
+      expect(fakePostList.getPostByID.mock.calls.length).toBe(1);
+      expect(fakePostList.updatePostByID.mock.calls.length).toBe(1);
+      expect(fakePostList.updatePostByID.mock.calls[0][0]).toBe(
+        fakeReq.params.id
+      );
+      expect(fakePostList.updatePostByID.mock.calls[0][1]).toStrictEqual(
+        fakeReq.body
+      );
+      expect(fakeRes.status.mock.calls.length).toBe(1);
+      expect(fakeRes.status.mock.calls[0][0]).toBe(200);
+      expect(fakeRes.send.mock.calls.length).toBe(1);
+      expect(fakeRes.send.mock.calls[0][0]).toStrictEqual({ success: true });
+    });
+
+    it("responds accordingly when not finding a post to update", async () => {
+      const fakeReq = {
+        params: { id: "cd831b" },
+        body: { title: "Updated title" },
+      };
+      fakePostList.getPostByID.mockReturnValue(null);
+
+      await postHandlers.handleUpdatePostByID(fakeReq, fakeRes);
+
+      expect(fakePostList.getPostByID.mock.calls.length).toBe(1);
+      expect(fakePostList.updatePostByID.mock.calls.length).toBe(0);
+      expect(fakeRes.status.mock.calls.length).toBe(1);
+      expect(fakeRes.status.mock.calls[0][0]).toBe(422);
+      expect(fakeRes.send.mock.calls.length).toBe(1);
+      expect(fakeRes.send.mock.calls[0][0]).toStrictEqual({
+        success: false,
+        error: "There is no post with this ID",
+      });
+    });
+
+    it("responds accordingly when the post exist but the new data is not valid", async () => {
+      const fakeReqs = [
+        {
+          params: { id: "valid" },
+          body: { title: undefined, content: undefined },
+        },
+        { params: { id: "valid" }, body: { title: null, content: null } },
+        { params: { id: "valid" }, body: { title: 100 } },
+        { params: { id: "valid" }, body: { title: " " } },
+        { params: { id: "valid" }, body: { title: "Non valid: @" } },
+        { params: { id: "valid" }, body: { content: 100 } },
+        { params: { id: "valid" }, body: { content: " " } },
+        { params: { id: "valid" }, body: { title: "valid", content: 100 } },
+        { params: { id: "valid" }, body: { title: 100, content: "valid" } },
+      ];
+
+      await Promise.all(
+        fakeReqs.map((fakeReq) => {
+          return postHandlers.handleUpdatePostByID(fakeReq, fakeRes);
+        })
+      );
+
+      expect(fakePostList.updatePostByID.mock.calls.length).toBe(0);
+      expect(fakeRes.send.mock.calls.length).toBe(fakeReqs.length);
+      expect(fakeRes.send.mock.calls.map((call) => call[0])).toEqual(
+        Array(fakeReqs.length).fill({
+          success: false,
+          error: "The title or the content of the post is not valid",
+        })
+      );
+    });
+
+    it("responds accordingly when the post exist, the data is valid but there is nothing to update", async () => {
+      const fakeReqs = [
+        {
+          params: { id: "cd831c" },
+          body: {
+            title: "Title before update",
+            content: "Content before update",
+          },
+        },
+        { params: { id: "cd831c" }, body: { title: "Title before update" } },
+        {
+          params: { id: "cd831c" },
+          body: { content: "Content before update" },
+        },
+      ];
+      fakePostList.getPostByID.mockReturnValue({
+        title: "Title before update",
+        content: "Content before update",
+      });
+
+      await Promise.all(
+        fakeReqs.map((fakeReq) =>
+          postHandlers.handleUpdatePostByID(fakeReq, fakeRes)
+        )
+      );
+
+      expect(fakePostList.getPostByID.mock.calls.length).toBe(fakeReqs.length);
+      expect(fakePostList.updatePostByID.mock.calls.length).toBe(0);
+      expect(fakeRes.status.mock.calls.length).toBe(fakeReqs.length);
+      expect(fakeRes.status.mock.calls.map((call) => call[0])).toEqual(
+        Array(fakeReqs.length).fill(422)
+      );
+      expect(fakeRes.send.mock.calls.length).toBe(fakeReqs.length);
+      expect(fakeRes.send.mock.calls.map((call) => call[0])).toEqual(
+        Array(fakeReqs.length).fill({
+          success: false,
+          error: "There is nothing to update",
+        })
+      );
     });
   });
 });

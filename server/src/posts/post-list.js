@@ -4,6 +4,7 @@ module.exports = function makePostList({ db }) {
     getPostByID,
     createPost,
     deletePostByID,
+    updatePostByID,
   };
 
   async function getRecentPosts(limit) {
@@ -41,5 +42,11 @@ module.exports = function makePostList({ db }) {
     const query = { _id: db.makeId(id) };
     let result = await db.collection("posts").deleteOne(query);
     return result.deletedCount === 1;
+  }
+
+  function updatePostByID(id, updates) {
+    const filter = { _id: db.makeId(id) };
+    const updateValues = { $set: updates };
+    return db.collection("posts").updateOne(filter, updateValues);
   }
 };

@@ -20,6 +20,7 @@ makeDb().then((db) => {
   router.get("/posts/:id", postHandlers.handleGetPostByID);
   router.post("/posts", postHandlers.handleCreatePost);
   router.delete("/posts/:id", postHandlers.handleDeletePostByID);
+  router.patch("/posts/:id", postHandlers.handleUpdatePostByID);
 });
 
 module.exports = router;

@@ -4,6 +4,7 @@ module.exports = function makePostHandlers({ postList }) {
     handleGetPostByID,
     handleCreatePost,
     handleDeletePostByID,
+    handleUpdatePostByID,
   };
 
   // Request URL must include the 'limit' query parameter (key & value)
@@ -55,5 +56,74 @@ module.exports = function makePostHandlers({ postList }) {
   async function handleDeletePostByID(req, res) {
     const isDeleted = await postList.deletePostByID(req.params.id);
     res.send({ success: isDeleted });
+  }
+
+  async function handleUpdatePostByID(req, res) {
+    // Step 1: Validate request data
+    const { title, content } = req.body;
+    if (
+      (title == undefined && content == undefined) ||
+      (title != undefined && !isValidTitle(title)) ||
+      (content != undefined && !isValidContent(content))
+    ) {
+      return res.send({
+        success: false,
+        error: "The title or the content of the post is not valid",
+      });
+    }
+
+    function isValidTitle(title) {
+      const regex = /^[A-Za-z0-9 _\-\.,?!/]{1,200}$/;
+      return (
+        typeof title === "string" && title.trim() !== "" && regex.test(title)
+      );
+    }
+
+    function isValidContent(content) {
+      const regex = /^[A-Za-z0-9 _\-\.,;:?!/()&#@$*%<>]{1,12000}$/;
+      return (
+        typeof content === "string" &&
+        content.trim() !== "" &&
+        regex.test(content)
+      );
+    }
+
+    // Step 2: Check if the post exists
+    let postToUpdate = await postList.getPostByID(req.params.id);
+
+    if (!postToUpdate) {
+      res
+        .status(422)
+        .send({ success: false, error: "There is no post with this ID" });
+      return;
+    }
+
+    // Step 3: Compare request data with DB data
+    if (
+      (title === postToUpdate.title && content === postToUpdate.content) ||
+      (title === postToUpdate.title && content == undefined) ||
+      (title == undefined && content === postToUpdate.content)
+    ) {
+      res
+        .status(422)
+        .send({ success: false, error: "There is nothing to update" });
+      return;
+    }
+
+    // Step 4: Update DB
+    let id = req.params.id;
+    let updates = {};
+
+    if (title != undefined) {
+      updates.title = title;
+    }
+    if (content != undefined) {
+      updates.content = content;
+    }
+
+    await postList.updatePostByID(id, updates);
+
+    // Step 5: Send the response
+    res.status(200).send({ success: true });
   }
 };
