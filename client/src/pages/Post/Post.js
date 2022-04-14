@@ -3,6 +3,9 @@ import { useParams } from "react-router-dom";
 import NotFound from "../NotFound/NotFound";
 import Container from "@material-ui/core/Container";
 import Typography from "@material-ui/core/Typography";
+import Box from "@material-ui/core/Box";
+import IconButton from "@material-ui/core/IconButton";
+import ClearIcon from "@material-ui/icons/Clear";
 import { makeStyles } from "@material-ui/core";
 import formatDate from "../../lib/lib";
 
@@ -29,7 +32,13 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   div: {
+    margin: theme.spacing(1, 3, 1, 0),
     color: "#6D6D6D",
+  },
+  iconButton: {
+    padding: theme.spacing(1),
+    color: "red",
+    border: "1px solid red",
   },
   content: {
     margin: theme.spacing(5, "auto"),
@@ -63,13 +72,26 @@ export default function Post() {
             >
               {post.title}
             </Typography>
-            <Typography
-              variant="subtitle1"
-              component="div"
-              className={classes.div}
+            <Box
+              display="flex"
+              flexWrap="wrap"
+              alignItems="center"
+              justifyContent="space-between"
             >
-              {formatDate({ post, upperCase: false })} - by {post.authorName}
-            </Typography>
+              <Typography
+                variant="subtitle1"
+                component="div"
+                className={classes.div}
+              >
+                {formatDate({ post, upperCase: false })} - by {post.authorName}
+              </Typography>
+              <IconButton
+                aria-label="delete the post"
+                className={classes.iconButton}
+              >
+                <ClearIcon fontSize="large" />
+              </IconButton>
+            </Box>
             <Typography
               variant="body1"
               component="p"
