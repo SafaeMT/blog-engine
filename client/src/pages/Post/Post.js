@@ -132,7 +132,12 @@ export default function Post() {
                     cannot be undone.
                   </Typography>
                   <Box display="flex" justifyContent="end">
-                    <Button className={classes.cancelButton}>CANCEL</Button>
+                    <Button
+                      onClick={closeModal}
+                      className={classes.cancelButton}
+                    >
+                      CANCEL
+                    </Button>
                     <Button className={classes.deleteButton}>DELETE</Button>
                   </Box>
                 </Paper>
