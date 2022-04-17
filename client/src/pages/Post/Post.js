@@ -1,14 +1,12 @@
 import { useState, useLayoutEffect } from "react";
 import { useParams } from "react-router-dom";
 import NotFound from "../NotFound/NotFound";
+import DeleteModal from "../../components/DeleteModal/DeleteModal";
 import Container from "@material-ui/core/Container";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import IconButton from "@material-ui/core/IconButton";
 import ClearIcon from "@material-ui/icons/Clear";
-import Modal from "@material-ui/core/Modal";
-import Paper from "@material-ui/core/Paper";
-import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core";
 import formatDate from "../../lib/lib";
 
@@ -42,28 +40,6 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(1),
     color: "red",
     border: "1px solid red",
-  },
-  modal: {
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-  },
-  paper: {
-    margin: theme.spacing(0, "auto"),
-    padding: theme.spacing(2, 4),
-    color: "#282C34",
-    [theme.breakpoints.up("sm")]: {
-      width: 400,
-    },
-  },
-  modalTitle: {
-    fontWeight: 500,
-  },
-  cancelButton: {
-    color: "#61dafb",
-  },
-  deleteButton: {
-    color: "red",
   },
   content: {
     margin: theme.spacing(5, "auto"),
@@ -118,30 +94,11 @@ export default function Post() {
               >
                 <ClearIcon fontSize="large" />
               </IconButton>
-              <Modal open={open} onClose={closeModal} className={classes.modal}>
-                <Paper className={classes.paper}>
-                  <Typography
-                    gutterBottom
-                    variant="h4"
-                    className={classes.modalTitle}
-                  >
-                    Delete confirmation
-                  </Typography>
-                  <Typography gutterBottom variant="body1" component="p">
-                    Are you sure you want to delete this post ? This operation
-                    cannot be undone.
-                  </Typography>
-                  <Box display="flex" justifyContent="end">
-                    <Button
-                      onClick={closeModal}
-                      className={classes.cancelButton}
-                    >
-                      CANCEL
-                    </Button>
-                    <Button className={classes.deleteButton}>DELETE</Button>
-                  </Box>
-                </Paper>
-              </Modal>
+              <DeleteModal
+                open={open}
+                onClose={closeModal}
+                cancel={closeModal}
+              />
             </Box>
             <Typography
               variant="body1"
