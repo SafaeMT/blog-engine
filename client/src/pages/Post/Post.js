@@ -48,6 +48,12 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(5, "auto"),
     color: "black",
   },
+  errorAlert: {
+    position: "fixed",
+    marginRight: theme.spacing(3),
+    bottom: theme.spacing(4),
+    color: "red",
+  },
 }));
 
 export default function Post() {
@@ -118,6 +124,7 @@ export default function Post() {
             </Typography>
             <Collapse in={openAlert}>
               <Alert
+                className={classes.errorAlert}
                 severity="error"
                 action={
                   <IconButton
