@@ -2,14 +2,13 @@ import { useState, useLayoutEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import NotFound from "../NotFound/NotFound";
 import DeleteModal from "../../components/DeleteModal/DeleteModal";
+import ErrorAlert from "../../components/ErrorAlert/ErrorAlert";
 import Container from "@material-ui/core/Container";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import IconButton from "@material-ui/core/IconButton";
 import Collapse from "@material-ui/core/Collapse";
-import Alert from "@material-ui/lab/Alert";
 import ClearIcon from "@material-ui/icons/Clear";
-import CloseIcon from "@material-ui/icons/Close";
 import { makeStyles } from "@material-ui/core";
 import formatDate from "../../lib/lib";
 
@@ -47,12 +46,6 @@ const useStyles = makeStyles((theme) => ({
   content: {
     margin: theme.spacing(5, "auto"),
     color: "black",
-  },
-  errorAlert: {
-    position: "fixed",
-    marginRight: theme.spacing(3),
-    bottom: theme.spacing(4),
-    color: "red",
   },
 }));
 
@@ -123,25 +116,11 @@ export default function Post() {
               {post.content}
             </Typography>
             <Collapse in={openAlert}>
-              <Alert
-                className={classes.errorAlert}
-                severity="error"
-                action={
-                  <IconButton
-                    aria-label="close the alert"
-                    color="inherit"
-                    size="small"
-                    onClick={() => {
-                      setOpenAlert(false);
-                    }}
-                  >
-                    <CloseIcon />
-                  </IconButton>
-                }
-              >
-                An error has occurred ! Please try again later or refresh the
-                page.
-              </Alert>
+              <ErrorAlert
+                onClick={() => {
+                  setOpenAlert(false);
+                }}
+              />
             </Collapse>
           </Container>
         </div>
