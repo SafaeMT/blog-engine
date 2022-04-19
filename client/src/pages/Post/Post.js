@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Post() {
   const classes = useStyles();
   const [post, setPost] = useState(null);
-  const [open, setOpen] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
   let urlParams = useParams();
 
   useLayoutEffect(() => {
@@ -88,16 +88,20 @@ export default function Post() {
                 {formatDate({ post, upperCase: false })} - by {post.authorName}
               </Typography>
               <IconButton
-                onClick={openModal}
+                onClick={() => {
+                  setOpenModal(true);
+                }}
                 aria-label="delete the post"
                 className={classes.iconButton}
               >
                 <ClearIcon fontSize="large" />
               </IconButton>
               <DeleteModal
-                open={open}
-                onClose={closeModal}
-                cancel={closeModal}
+                open={openModal}
+                onClose={() => {
+                  setOpenModal(false);
+                }}
+                onClick={handleClickModal}
               />
             </Box>
             <Typography
@@ -113,11 +117,12 @@ export default function Post() {
     </>
   );
 
-  function openModal() {
-    setOpen(true);
-  }
-
-  function closeModal() {
-    setOpen(false);
+  function handleClickModal(e) {
+    if (e.target.textContent === "CANCEL") {
+      setOpenModal(false);
+    } else if (e.target.textContent === "DELETE") {
+      setOpenModal(false);
+      fetch(`/api/posts/${post._id}`, { method: "DELETE" });
+    }
   }
 }

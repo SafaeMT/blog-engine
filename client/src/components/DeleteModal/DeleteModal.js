@@ -34,7 +34,12 @@ export default function DeleteModal(props) {
   const classes = useStyles();
 
   return (
-    <Modal open={props.open} onClose={props.onClose} className={classes.modal}>
+    <Modal
+      open={props.open}
+      onClose={props.onClose}
+      onClick={props.onClick}
+      className={classes.modal}
+    >
       <Paper className={classes.paper}>
         <Typography gutterBottom variant="h4" className={classes.modalTitle}>
           Delete confirmation
@@ -44,9 +49,7 @@ export default function DeleteModal(props) {
           undone.
         </Typography>
         <Box display="flex" justifyContent="end">
-          <Button onClick={props.cancel} className={classes.cancelButton}>
-            CANCEL
-          </Button>
+          <Button className={classes.cancelButton}>CANCEL</Button>
           <Button className={classes.deleteButton}>DELETE</Button>
         </Box>
       </Paper>
