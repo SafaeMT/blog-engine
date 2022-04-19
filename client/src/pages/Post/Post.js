@@ -1,12 +1,15 @@
 import { useState, useLayoutEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import NotFound from "../NotFound/NotFound";
 import DeleteModal from "../../components/DeleteModal/DeleteModal";
 import Container from "@material-ui/core/Container";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import IconButton from "@material-ui/core/IconButton";
+import Collapse from "@material-ui/core/Collapse";
+import Alert from "@material-ui/lab/Alert";
 import ClearIcon from "@material-ui/icons/Clear";
+import CloseIcon from "@material-ui/icons/Close";
 import { makeStyles } from "@material-ui/core";
 import formatDate from "../../lib/lib";
 
@@ -51,7 +54,9 @@ export default function Post() {
   const classes = useStyles();
   const [post, setPost] = useState(null);
   const [openModal, setOpenModal] = useState(false);
+  const [openAlert, setOpenAlert] = useState(false);
   let urlParams = useParams();
+  let navigate = useNavigate();
 
   useLayoutEffect(() => {
     fetch(`/api/posts/${urlParams.id}`)
@@ -111,6 +116,26 @@ export default function Post() {
             >
               {post.content}
             </Typography>
+            <Collapse in={openAlert}>
+              <Alert
+                severity="error"
+                action={
+                  <IconButton
+                    aria-label="close the alert"
+                    color="inherit"
+                    size="small"
+                    onClick={() => {
+                      setOpenAlert(false);
+                    }}
+                  >
+                    <CloseIcon />
+                  </IconButton>
+                }
+              >
+                An error has occurred ! Please try again later or refresh the
+                page.
+              </Alert>
+            </Collapse>
           </Container>
         </div>
       )}
@@ -122,7 +147,9 @@ export default function Post() {
       setOpenModal(false);
     } else if (e.target.textContent === "DELETE") {
       setOpenModal(false);
-      fetch(`/api/posts/${post._id}`, { method: "DELETE" });
+      fetch(`/api/posts/${post._id}`, { method: "DELETE" })
+        .then((response) => response.json())
+        .then((data) => (data.success ? navigate("/") : setOpenAlert(true)));
     }
   }
 }
