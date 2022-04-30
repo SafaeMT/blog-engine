@@ -8,6 +8,7 @@ import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import IconButton from "@material-ui/core/IconButton";
 import Collapse from "@material-ui/core/Collapse";
+import Alert from "@material-ui/lab/Alert";
 import ClearIcon from "@material-ui/icons/Clear";
 import { makeStyles } from "@material-ui/core";
 import formatDate from "../../lib/lib";
@@ -47,13 +48,21 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(5, "auto"),
     color: "black",
   },
+  successAlert: {
+    position: "fixed",
+    marginRight: theme.spacing(3),
+    bottom: theme.spacing(4),
+    color: "green",
+  },
 }));
 
 export default function Post() {
   const classes = useStyles();
   const [post, setPost] = useState(null);
   const [openModal, setOpenModal] = useState(false);
-  const [openAlert, setOpenAlert] = useState(false);
+  const [openErrorAlert, setOpenErrorAlert] = useState(false);
+  const [successAlertVisibility, setSuccessAlertVisibility] =
+    useState("hidden");
   let urlParams = useParams();
   let navigate = useNavigate();
 
@@ -115,10 +124,15 @@ export default function Post() {
             >
               {post.content}
             </Typography>
-            <Collapse in={openAlert}>
+            <Box visibility={successAlertVisibility}>
+              <Alert severity="success" className={classes.successAlert}>
+                The post has been deleted !
+              </Alert>
+            </Box>
+            <Collapse in={openErrorAlert}>
               <ErrorAlert
                 onClick={() => {
-                  setOpenAlert(false);
+                  setOpenErrorAlert(false);
                 }}
               />
             </Collapse>
@@ -135,7 +149,14 @@ export default function Post() {
       setOpenModal(false);
       fetch(`/api/posts/${post._id}`, { method: "DELETE" })
         .then((response) => response.json())
-        .then((data) => (data.success ? navigate("/") : setOpenAlert(true)));
+        .then((data) =>
+          data.success ? handlePostDeletionSuccess() : setOpenErrorAlert(true)
+        );
     }
+  }
+
+  function handlePostDeletionSuccess() {
+    setSuccessAlertVisibility("visible");
+    setTimeout(() => navigate("/"), 1000);
   }
 }
