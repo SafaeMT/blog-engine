@@ -43,6 +43,7 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(1),
     color: "red",
     border: "1px solid red",
+    boxShadow: "3px 3px 5px #6D6D6D",
   },
   content: {
     margin: theme.spacing(5, "auto"),
