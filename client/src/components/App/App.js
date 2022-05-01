@@ -4,6 +4,7 @@ import Header from "../Header/Header";
 import NotFound from "../../pages/NotFound/NotFound";
 import Home from "../../pages/Home/Home";
 import Post from "../../pages/Post/Post";
+import AddPost from "../../pages/AddPost/AddPost";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import {
   createTheme,
@@ -16,6 +17,9 @@ let customTheme = createTheme({
     fontFamily: ["Ubuntu", "Roboto", "Helvetica", "Arial", "sans-serif"],
   },
   palette: {
+    primary: {
+      main: "#61dafb",
+    },
     background: {
       default: "#ffffff",
     },
@@ -46,6 +50,7 @@ function App() {
           <Route path="*" element={<NotFound />} />
           <Route path="/" element={<Home />} />
           <Route path="/posts/:id" element={<Post />} />
+          <Route path="/add-post" element={<AddPost />} />
         </Routes>
       </ThemeProvider>
     </BrowserRouter>

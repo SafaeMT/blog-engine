@@ -1,4 +1,4 @@
-import React from "react";
+import { useNavigate } from "react-router-dom";
 import PostList from "../../components/PostList/PostList";
 import Container from "@material-ui/core/Container";
 import Typography from "@material-ui/core/Typography";
@@ -60,6 +60,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Home() {
   const classes = useStyles();
+  let navigate = useNavigate();
 
   return (
     <div className={classes.div}>
@@ -67,7 +68,11 @@ export default function Home() {
         <Typography variant="h2" component="h1" className={classes.title}>
           Recent Posts
         </Typography>
-        <IconButton aria-label="add a new post" className={classes.iconButton}>
+        <IconButton
+          onClick={() => navigate("/add-post")}
+          aria-label="add a new post"
+          className={classes.iconButton}
+        >
           <PostAddIcon fontSize="large" />
         </IconButton>
         <PostList />
