@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Container from "@material-ui/core/Container";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
@@ -47,6 +48,13 @@ const useStyles = makeStyles((theme) => ({
 
 export default function AddPost() {
   const classes = useStyles();
+  const [titleValue, setTitleValue] = useState("");
+  const [isBlurredTitle, setIsBlurredTitle] = useState(false);
+  const [isChangedTitle, setIsChangedTitle] = useState(false);
+  const [titleFeedback, setTitleFeedback] = useState({
+    isValid: false,
+    errorMessage: null,
+  });
 
   return (
     <div className={classes.wrapperDiv}>
@@ -66,6 +74,11 @@ export default function AddPost() {
           <TextField
             label="Title"
             variant="outlined"
+            error={(isChangedTitle || isBlurredTitle) && !titleFeedback.isValid}
+            helperText={titleFeedback.errorMessage}
+            value={titleValue}
+            onChange={handleTitleChange}
+            onBlur={handleTitleBlur}
             required
             fullWidth
             multiline
@@ -94,4 +107,33 @@ export default function AddPost() {
       </Container>
     </div>
   );
+
+  function handleTitleChange(e) {
+    setIsChangedTitle(true);
+    setTitleValue(e.target.value);
+    validateTitle(e.target.value);
+  }
+
+  function validateTitle(value) {
+    const regex = /^[A-Za-z0-9 _\-\.,'"?!/]{1,200}$/;
+
+    if (value.trim() === "" || !regex.test(value)) {
+      setTitleFeedback({
+        isValid: false,
+        errorMessage: "Please enter a valid title.",
+      });
+    } else {
+      setTitleFeedback({ isValid: true, errorMessage: null });
+    }
+  }
+
+  function handleTitleBlur() {
+    if (!isChangedTitle) {
+      setIsBlurredTitle(true);
+      setTitleFeedback({
+        isValid: false,
+        errorMessage: "Please enter a valid title.",
+      });
+    }
+  }
 }
