@@ -55,6 +55,13 @@ export default function AddPost() {
     isValid: false,
     errorMessage: null,
   });
+  const [contentValue, setContentValue] = useState("");
+  const [isBlurredContent, setIsBlurredContent] = useState(false);
+  const [isChangedContent, setIsChangedContent] = useState(false);
+  const [contentFeedback, setContentFeedback] = useState({
+    isValid: false,
+    errorMessage: null,
+  });
 
   return (
     <div className={classes.wrapperDiv}>
@@ -88,6 +95,13 @@ export default function AddPost() {
           <TextField
             label="Content"
             variant="outlined"
+            error={
+              (isChangedContent || isBlurredContent) && !contentFeedback.isValid
+            }
+            helperText={contentFeedback.errorMessage}
+            value={contentValue}
+            onChange={handleContentChange}
+            onBlur={handleContentBlur}
             required
             fullWidth
             multiline
@@ -133,6 +147,35 @@ export default function AddPost() {
       setTitleFeedback({
         isValid: false,
         errorMessage: "Please enter a valid title.",
+      });
+    }
+  }
+
+  function handleContentChange(e) {
+    setIsChangedContent(true);
+    setContentValue(e.target.value);
+    validateContent(e.target.value);
+  }
+
+  function validateContent(value) {
+    const regex = /^[A-Za-z0-9 _\-\.,;:'"`?!/()&#@$*%<>]{1,12000}$/;
+
+    if (value.trim() === "" || !regex.test(value)) {
+      setContentFeedback({
+        isValid: false,
+        errorMessage: "Please enter a valid content.",
+      });
+    } else {
+      setContentFeedback({ isValid: true, errorMessage: null });
+    }
+  }
+
+  function handleContentBlur() {
+    if (!isChangedContent) {
+      setIsBlurredContent(true);
+      setContentFeedback({
+        isValid: false,
+        errorMessage: "Please enter a valid content.",
       });
     }
   }
