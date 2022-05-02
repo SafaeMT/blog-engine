@@ -58,9 +58,9 @@ export default function AddPost() {
           <TextField
             label="Name"
             variant="outlined"
-            required
+            defaultValue="Admin"
             fullWidth
-            autoFocus
+            disabled
             className={classes.textField}
           />
           <TextField
@@ -69,6 +69,7 @@ export default function AddPost() {
             required
             fullWidth
             multiline
+            autoFocus
             className={classes.textField}
           />
           <TextField
