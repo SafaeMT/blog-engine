@@ -69,7 +69,7 @@ export default function AddPost() {
         <Typography variant="h2" component="h1" className={classes.title}>
           Add a New Post
         </Typography>
-        <form>
+        <form onSubmit={handleSubmit}>
           <TextField
             label="Name"
             variant="outlined"
@@ -111,6 +111,7 @@ export default function AddPost() {
             <Button
               variant="contained"
               size="large"
+              type="submit"
               disabled={!titleFeedback.isValid || !contentFeedback.isValid}
               className={classes.submitButton}
             >
@@ -178,5 +179,20 @@ export default function AddPost() {
         errorMessage: "Please enter a valid content.",
       });
     }
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    const postData = {
+      title: titleValue,
+      content: contentValue,
+      authorName: "Admin",
+    };
+
+    fetch("/api/posts", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(postData),
+    });
   }
 }
