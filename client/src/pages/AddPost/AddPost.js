@@ -111,7 +111,7 @@ export default function AddPost() {
             <Button
               variant="contained"
               size="large"
-              disabled
+              disabled={!titleFeedback.isValid || !contentFeedback.isValid}
               className={classes.submitButton}
             >
               Submit
