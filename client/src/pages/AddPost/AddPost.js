@@ -62,6 +62,7 @@ export default function AddPost() {
     isValid: false,
     errorMessage: null,
   });
+  const [isClickedButton, setIsClickedButton] = useState(false);
 
   return (
     <div className={classes.wrapperDiv}>
@@ -112,7 +113,11 @@ export default function AddPost() {
               variant="contained"
               size="large"
               type="submit"
-              disabled={!titleFeedback.isValid || !contentFeedback.isValid}
+              disabled={
+                !titleFeedback.isValid ||
+                !contentFeedback.isValid ||
+                isClickedButton
+              }
               className={classes.submitButton}
             >
               Submit
@@ -183,12 +188,13 @@ export default function AddPost() {
 
   function handleSubmit(e) {
     e.preventDefault();
+    setIsClickedButton(true);
+
     const postData = {
       title: titleValue,
       content: contentValue,
       authorName: "Admin",
     };
-
     fetch("/api/posts", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
