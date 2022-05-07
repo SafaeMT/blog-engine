@@ -1,9 +1,12 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import ErrorAlert from "../../components/ErrorAlert/ErrorAlert";
 import Container from "@material-ui/core/Container";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
+import Collapse from "@material-ui/core/Collapse";
 import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
@@ -63,6 +66,8 @@ export default function AddPost() {
     errorMessage: null,
   });
   const [isClickedButton, setIsClickedButton] = useState(false);
+  const [openErrorAlert, setOpenErrorAlert] = useState(false);
+  let navigate = useNavigate();
 
   return (
     <div className={classes.wrapperDiv}>
@@ -124,6 +129,13 @@ export default function AddPost() {
             </Button>
           </Box>
         </form>
+        <Collapse in={openErrorAlert}>
+          <ErrorAlert
+            onClick={() => {
+              setOpenErrorAlert(false);
+            }}
+          />
+        </Collapse>
       </Container>
     </div>
   );
@@ -195,10 +207,20 @@ export default function AddPost() {
       content: contentValue,
       authorName: "Admin",
     };
-    fetch("/api/posts", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(postData),
-    });
+    try {
+      fetch("/api/posts", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(postData),
+      })
+        .then((response) => response.json())
+        .then((data) =>
+          data.success
+            ? navigate(`/posts/${data.postId}`)
+            : setOpenErrorAlert(true)
+        );
+    } catch (error) {
+      console.log(error);
+    }
   }
 }
