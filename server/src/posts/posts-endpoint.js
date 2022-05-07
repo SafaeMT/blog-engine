@@ -26,7 +26,11 @@ module.exports = function makePostHandlers({ postList }) {
   }
 
   async function handleCreatePost(req, res) {
-    const fields = ["title", "content", "authorName"];
+    const fields = ["title", "content"];
+    const regex = {
+      title: /^[A-Za-z0-9 _\-\.,'"?!/]{1,200}$/,
+      content: /^[A-Za-z0-9 _\-\.,;:'"`?!/()&#@$*%<>]{1,12000}$/,
+    };
     let isValid = true;
 
     fields.forEach(async (field) => {
@@ -37,20 +41,29 @@ module.exports = function makePostHandlers({ postList }) {
       if (
         !Object.prototype.hasOwnProperty.call(req.body, field) ||
         typeof req.body[field] !== "string" ||
-        req.body[field].length == 0
+        req.body[field].trim() === "" ||
+        !regex[field].test(req.body[field])
       ) {
         isValid = false;
       }
     });
 
     if (!isValid) {
-      res.status(422).end();
+      res.status(422).send({
+        success: false,
+        error: "The post could not be created (transmitted data is invalid).",
+      });
       return;
     }
 
-    const { title, content, authorName } = req.body;
-    let result = await postList.createPost({ title, content, authorName });
-    res.status(200).send(result);
+    const { title, content } = req.body;
+    let result = await postList.createPost({
+      title: title.trim(),
+      content: content.trim(),
+    });
+    res
+      .status(200)
+      .send({ success: result.acknowledged, postId: result.insertedId });
   }
 
   async function handleDeletePostByID(req, res) {

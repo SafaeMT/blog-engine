@@ -96,12 +96,12 @@ describe("Posts Endpoint", () => {
   describe("Handle Create Post", () => {
     it("successfully creates a new post", async () => {
       const fakeReq = {
-        body: {
-          title: "Fake title",
-          content: "Fake content",
-          authorName: "Fake author name",
-        },
+        body: { title: "Fake title", content: "Fake content" },
       };
+      fakePostList.createPost.mockReturnValue({
+        acknowledged: true,
+        insertedId: "abc123",
+      });
 
       await postHandlers.handleCreatePost(fakeReq, fakeRes);
 
@@ -109,19 +109,17 @@ describe("Posts Endpoint", () => {
       expect(fakeRes.status.mock.calls.length).toBe(1);
       expect(fakeRes.send.mock.calls.length).toBe(1);
       expect(fakeRes.status.mock.calls[0][0]).toBe(200);
+      expect(fakeRes.send.mock.calls[0][0]).toStrictEqual({
+        success: true,
+        postId: "abc123",
+      });
     });
 
     it("errors when post info is not valid", async () => {
       const fakeReqs = [
-        { body: { title: "Title 1", authorName: "Author name 1" } },
-        { body: { title: "Title 2", content: "Content 2", authorName: true } },
-        {
-          body: {
-            title: "",
-            content: "Content 3",
-            authorName: "Author name 3",
-          },
-        },
+        { body: { title: "Title 1" } },
+        { body: { title: " ", content: "Content 2" } },
+        { body: { title: "Title 3 @", content: "Content 3" } },
       ];
 
       await Promise.all(
@@ -132,9 +130,15 @@ describe("Posts Endpoint", () => {
 
       expect(fakePostList.createPost.mock.calls.length).toBe(0);
       expect(fakeRes.status.mock.calls.length).toBe(fakeReqs.length);
-      expect(fakeRes.end.mock.calls.length).toBe(fakeReqs.length);
+      expect(fakeRes.send.mock.calls.length).toBe(fakeReqs.length);
       expect(fakeRes.status.mock.calls.map((call) => call[0])).toEqual(
         Array(fakeReqs.length).fill(422)
+      );
+      expect(fakeRes.send.mock.calls.map((call) => call[0])).toEqual(
+        Array(fakeReqs.length).fill({
+          success: false,
+          error: "The post could not be created (transmitted data is invalid).",
+        })
       );
     });
   });

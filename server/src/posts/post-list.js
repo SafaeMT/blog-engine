@@ -32,7 +32,7 @@ module.exports = function makePostList({ db }) {
       title: newPost.title,
       content: newPost.content,
       authorId: db.makeId(),
-      authorName: newPost.authorName,
+      authorName: "Admin",
     };
 
     return db.collection("posts").insertOne(query);
