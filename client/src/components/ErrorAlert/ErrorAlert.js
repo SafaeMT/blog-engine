@@ -30,7 +30,7 @@ export default function ErrorAlert(props) {
         </IconButton>
       }
     >
-      An error has occurred ! Please try again later or refresh the page.
+      {props.errorMessage}
     </Alert>
   );
 }

@@ -132,6 +132,7 @@ export default function Post() {
             </Box>
             <Collapse in={openErrorAlert}>
               <ErrorAlert
+                errorMessage="An error has occurred ! Please try again later or refresh the page."
                 onClick={() => {
                   setOpenErrorAlert(false);
                 }}

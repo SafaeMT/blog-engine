@@ -66,7 +66,7 @@ export default function AddPost() {
     errorMessage: null,
   });
   const [isClickedButton, setIsClickedButton] = useState(false);
-  const [openErrorAlert, setOpenErrorAlert] = useState(false);
+  const [errorAlert, setErrorAlert] = useState({ open: false, message: "" });
   let navigate = useNavigate();
 
   return (
@@ -129,10 +129,11 @@ export default function AddPost() {
             </Button>
           </Box>
         </form>
-        <Collapse in={openErrorAlert}>
+        <Collapse in={errorAlert.open}>
           <ErrorAlert
+            errorMessage={errorAlert.message}
             onClick={() => {
-              setOpenErrorAlert(false);
+              setErrorAlert({ open: false, message: errorAlert.message });
             }}
           />
         </Collapse>
@@ -217,7 +218,7 @@ export default function AddPost() {
         .then((data) =>
           data.success
             ? navigate(`/posts/${data.postId}`)
-            : setOpenErrorAlert(true)
+            : setErrorAlert({ open: true, message: data.error })
         );
     } catch (error) {
       console.log(error);
