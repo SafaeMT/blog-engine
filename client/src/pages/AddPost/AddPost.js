@@ -65,7 +65,7 @@ export default function AddPost() {
     isValid: false,
     errorMessage: null,
   });
-  const [isClickedButton, setIsClickedButton] = useState(false);
+  const [isClickedSubmitButton, setIsClickedSubmitButton] = useState(false);
   const [errorAlert, setErrorAlert] = useState({ open: false, message: "" });
   let navigate = useNavigate();
 
@@ -121,7 +121,7 @@ export default function AddPost() {
               disabled={
                 !titleFeedback.isValid ||
                 !contentFeedback.isValid ||
-                isClickedButton
+                isClickedSubmitButton
               }
               className={classes.submitButton}
             >
@@ -134,6 +134,7 @@ export default function AddPost() {
             errorMessage={errorAlert.message}
             onClick={() => {
               setErrorAlert({ open: false, message: errorAlert.message });
+              setIsClickedSubmitButton(false);
             }}
           />
         </Collapse>
@@ -201,7 +202,7 @@ export default function AddPost() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    setIsClickedButton(true);
+    setIsClickedSubmitButton(true);
 
     const postData = {
       title: titleValue,
