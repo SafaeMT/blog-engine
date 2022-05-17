@@ -10,6 +10,7 @@ import IconButton from "@material-ui/core/IconButton";
 import Collapse from "@material-ui/core/Collapse";
 import Alert from "@material-ui/lab/Alert";
 import ClearIcon from "@material-ui/icons/Clear";
+import EditIcon from "@material-ui/icons/Edit";
 import { makeStyles } from "@material-ui/core";
 import formatDate from "../../lib/lib";
 
@@ -40,10 +41,22 @@ const useStyles = makeStyles((theme) => ({
     color: "#6D6D6D",
   },
   iconButton: {
+    marginLeft: theme.spacing(1),
     padding: theme.spacing(1),
-    color: "red",
-    border: "1px solid red",
+    color: "white",
     boxShadow: "3px 3px 5px #6D6D6D",
+  },
+  editButton: {
+    backgroundColor: "#61dafb",
+    "&.MuiButtonBase-root:hover": {
+      backgroundColor: "#61dafb",
+    },
+  },
+  deleteButton: {
+    backgroundColor: "red",
+    "&.MuiButtonBase-root:hover": {
+      backgroundColor: "red",
+    },
   },
   content: {
     margin: theme.spacing(5, "auto"),
@@ -101,15 +114,23 @@ export default function Post() {
               >
                 {formatDate({ post, upperCase: false })} - by {post.authorName}
               </Typography>
-              <IconButton
-                onClick={() => {
-                  setOpenModal(true);
-                }}
-                aria-label="delete the post"
-                className={classes.iconButton}
-              >
-                <ClearIcon fontSize="large" />
-              </IconButton>
+              <Box>
+                <IconButton
+                  aria-label="edit the post"
+                  className={`${classes.iconButton} ${classes.editButton}`}
+                >
+                  <EditIcon fontSize="large" />
+                </IconButton>
+                <IconButton
+                  onClick={() => {
+                    setOpenModal(true);
+                  }}
+                  aria-label="delete the post"
+                  className={`${classes.iconButton} ${classes.deleteButton}`}
+                >
+                  <ClearIcon fontSize="large" />
+                </IconButton>
+              </Box>
               <DeleteModal
                 open={openModal}
                 onClose={() => {
